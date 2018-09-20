@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using UsersApi.Db;
 
 namespace UsersApi
 {
@@ -23,6 +25,10 @@ namespace UsersApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=GigiUsers;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<UsersDbContext>( opt => {
+                opt.UseSqlServer(connection);
+            });
             services.AddMvc();
         }
 
